@@ -2,9 +2,8 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import {Provider} from 'react-redux';
 import { AppLoading, Asset, Font, Icon } from 'expo';
-import {ActionButton, Toolbar} from 'react-native-material-ui';
+import {Toolbar} from 'react-native-material-ui';
 import {store} from './state';
-import CreateCard from './createCard';
 import {StateView} from './viewHandler';
 
 export default class App extends React.Component {
