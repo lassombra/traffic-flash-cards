@@ -1,8 +1,9 @@
 import {createStore} from 'redux';
-import createCard from '../createCard/reducers';
+import {reducer as createCard} from '../createCard';
 import {reducer as viewDeck} from '../viewDeck';
 import {reducer as studySession} from '../studySession';
 import {CREATE_VIEW} from '../createCard/constants'; // default view constant
+
 
 
 function coreReducer(state = {view:CREATE_VIEW}, action) {

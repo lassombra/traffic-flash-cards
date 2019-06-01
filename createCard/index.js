@@ -1,10 +1,12 @@
 import {Card, Button} from 'react-native-material-ui';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {createCard} from './actions';
-import {switchToDeckView} from '../viewDeck/actions';
+import {Actions as ViewDeckActions} from '../viewDeck';
 import {connect} from 'react-redux';
 import React from 'react';
 import viewHandler from '../viewHandler';
+export reducer from './reducers';
+export * as Actions from './actions';
 
 class CreateCard extends React.Component {
     constructor() {
@@ -66,4 +68,4 @@ const styles = StyleSheet.create({
     }
 });
 
-viewHandler.register('createCards', connect(state => ({cards: state.cards}), {createCard,switchToDeckView})(CreateCard));
+viewHandler.register('createCards', connect(state => ({cards: state.cards}), {createCard,switchToDeckView:ViewDeckActions.switchToDeckView})(CreateCard));
