@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, InteractionManager, Text, StyleSheet} from 'react-native';
+import {Card} from 'react-native-material-ui';
 import {RED, GREEN, YELLOW, WHITE} from './constants';
 import {VIEW} from './constants';
 import {connect} from 'react-redux';
@@ -8,17 +9,23 @@ import * as Actions from './actions';
 export reducer from './reducers';
 export * as Actions from './actions';
 
-const StudySession = connect(state => ({deck: state.deck}), {...Actions})(
+const StudySession = connect(state => ({deck: state.deck, activeCard: state.activeCard}), {...Actions})(
     class StudySession extends React.Component {
         render() {
             if (!this.props.deck) {
                 this.init();
-                return <View style={style.center}>
+                return <View style={[style.flex,style.center]}>
                     <Text style={style.shufflingText}>Shuffling</Text>
                 </View>;
             }
-            return <View style={style.center}>
-                <Text style={style.shufflingText}>Shuffling</Text>
+            return <View style={[style.flex,style.verticalCenter]}>
+                <Card>
+                    <View style={[style.card, style.center]}>
+                        <Text>
+                            {this.props.activeCard[`side${this.props.activeCard.currentSide}`]}
+                        </Text>
+                    </View>
+                </Card>
             </View>;
         }
         init() {
@@ -44,9 +51,17 @@ const StudySession = connect(state => ({deck: state.deck}), {...Actions})(
 
 const style = StyleSheet.create({
     center: {
-        flex:1,
         justifyContent: 'center',
         alignItems:'center'
+    },
+    flex:{
+        flex:1
+    },
+    verticalCenter: {
+        justifyContent: 'center'
+    },
+    card: {
+        height: 250
     },
     shufflingText: {
         fontSize: 24

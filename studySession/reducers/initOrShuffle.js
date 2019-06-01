@@ -1,4 +1,5 @@
 import {INIT_OR_SHUFFLE_DECKS, RED, YELLOW, GREEN, WHITE} from '../constants';
+import {selectActiveCard, newActiveColor} from './helpers';
 
 export default function(state, action) {
     if (action.type === INIT_OR_SHUFFLE_DECKS) {
@@ -21,26 +22,4 @@ export default function(state, action) {
         return {...state, deck, activeCard, activeColor}
     }
     else return state;
-}
-
-function selectActiveCard(deck, activeColor) {
-    let activeDeck = deck.filter(card => card.color === activeColor);
-    let activeCard;
-    while (activeDeck.length <= 0 && activeColor !== undefined) {
-        activeColor = newActiveColor(deck);
-        activeDeck = deck.filter(card => card.color === activeColor);
-    }
-    if (activeDeck.length > 0) {
-        activeCard = activeDeck[0];
-        deck = deck.filter(card => card !== activeCard);
-    }
-    return [activeCard, deck, activeColor];
-}
-
-function newActiveColor(deck) {
-    if (deck.length >0 ) {
-        return deck.map(card => card.color).sort()[0];
-    } else {
-        return undefined;
-    }
 }
