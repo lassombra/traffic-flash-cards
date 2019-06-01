@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import {VIEW} from './constants';
-import viewHandler from './viewHandler';
+import viewHandler from '../viewHandler';
 export reducer from './reducers';
 export * as Actions from './actions';
 

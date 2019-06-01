@@ -5,13 +5,14 @@ import {connect} from 'react-redux';
 import viewHandler from '../viewHandler';
 import {switchToCreate} from '../createCard/actions';
 import {DECK_VIEW} from './constants';
+import {Actions as StudySessionActions} from '../studySession';
 export reducer from './reducers';
 export * as actions from './actions';
 
 class DisplayDeck extends React.Component{
     render() {
         return <View style={({flex:1,justifyContent:'center',alignContent:'center'})}>
-            <ScrollView style={({flex:1})} showsVerticalScrollIndicator={true}>
+            <ScrollView style={({flex:10})} showsVerticalScrollIndicator={true}>
                 {this.props.cards.map((card, index) => <Card key={index}>
                     <View style={styles.card}>
                         <View style={styles.side}>
@@ -23,7 +24,14 @@ class DisplayDeck extends React.Component{
                     </View>
                 </Card>)}
             </ScrollView>
-            <Button text="Input more cards" onPress={this.props.switchToCreate} />
+            <View style={({flex:1, flexDirection:'row'})}>
+                <View style={({flex:1})}>
+                    <Button text="Input more cards" onPress={this.props.switchToCreate} />
+                </View>
+                <View style={({flex:1})}>
+                    <Button text="Begin" onPress={this.props.switchToStudySession} />
+                </View>
+            </View>
         </View>;
     }
 }
@@ -41,4 +49,4 @@ const styles = StyleSheet.create({
     }
 })
 
-viewHandler.register(DECK_VIEW, connect(state => ({cards: state.cards || []}), {switchToCreate})(DisplayDeck));
+viewHandler.register(DECK_VIEW, connect(state => ({cards: state.cards || []}), {switchToCreate, switchToStudySession: StudySessionActions.switchToStudySession})(DisplayDeck));
