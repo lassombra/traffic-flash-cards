@@ -19,13 +19,13 @@ const StudySession = connect(state => ({deck: state.deck, activeCard: state.acti
                 </View>;
             }
             return <View style={[style.flex,style.verticalCenter]}>
-                <Card>
+                {this.props.activeCard ? <Card>
                     <View style={[style.card, style.center]}>
                         <Text>
                             {this.props.activeCard[`side${this.props.activeCard.currentSide}`]}
                         </Text>
                     </View>
-                </Card>
+                </Card> : null }
             </View>;
         }
         init() {

@@ -1,7 +1,7 @@
-export function selectActiveCard(deck, activeColor) {
+export function selectActiveCard(deck, activeColor, changeColor = true) {
     let activeDeck = deck.filter(card => card.color === activeColor);
     let activeCard;
-    while (activeDeck.length <= 0 && activeColor !== undefined) {
+    while (activeDeck.length <= 0 && activeColor !== undefined && changeColor) {
         activeColor = newActiveColor(deck);
         activeDeck = deck.filter(card => card.color === activeColor);
     }
