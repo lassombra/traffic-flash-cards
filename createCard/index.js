@@ -1,8 +1,10 @@
 import {Card, Button} from 'react-native-material-ui';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {createCard} from './actions';
+import {switchToDeckView} from '../viewDeck/actions';
 import {connect} from 'react-redux';
 import React from 'react';
+import viewHandler from '../viewHandler';
 
 class CreateCard extends React.Component {
     constructor() {
@@ -17,21 +19,24 @@ class CreateCard extends React.Component {
             <Card>
                 <Text>Side 1</Text>
                 <View style={styles.card}>
-                    <TextInput style={styles.textInput} value={this.state.side1} onChangeText={side1 => this.setState({side1})} returnKeyType="next" onSubmitEditing={() => {
-                        if(this.text2) {
-                            this.text2.focus();
-                        }
-                    }} blurOnSubmit={false}/>
+                    <TextInput style={styles.textInput} value={this.state.side1} onChangeText={side1 => this.setState({side1})} multiline={true}/>
                 </View>
             </Card>
             <Card>
                 <Text>Side 2</Text>
                 <View style={styles.card}>
-                    <TextInput style={styles.textInput} value={this.state.side2} onChangeText={side2 => this.setState({side2})} returnKeyType="done" ref={el => this.text2 = el} onSubmitEditing={() => this.submit()}/>
+                    <TextInput style={styles.textInput} value={this.state.side2} onChangeText={side2 => this.setState({side2})} multiline={true}/>
                 </View>
             </Card>
             <View style={styles.button}>
-                <Button text="save" onPress={() => this.submit()} />
+                <View style={({flex:2, alignItems: 'flex-start'})}>
+                    <Button style={({alignSelf: 'flex-start', flex: 1})} 
+                            onPress={this.props.switchToDeckView}
+                            text={`You have ${this.props.cards && this.props.cards.length || 0} card${this.props.cards && this.props.cards.length == 1 ? '' : 's'} entered`}/>
+                </View>
+                <View style={({flex:1, alignItems: 'flex-end'})}>
+                    <Button style={({flex: 1})} text="save" onPress={() => this.submit()} />
+                </View>
             </View>
         </View>;
     }
@@ -44,20 +49,21 @@ class CreateCard extends React.Component {
 const styles = StyleSheet.create({
     textInput: {
         borderWidth: 1, 
-        height: 100, 
+        height: 200, 
         borderColor: 'lightgrey', 
         margin: 10, 
-        padding:10
+        padding:10,
+        borderRadius: 10
     },
     card: {
         alignItems: 'stretch',
         height: 250,
     },
     button: {
-        justifyContent:'flex-end',
-        alignItems:'flex-end',
+        alignContent:'flex-end',
+        flexDirection: 'row',
         flex: 1
     }
-})
+});
 
-export default connect(undefined, {createCard})(CreateCard);
+viewHandler.register('createCards', connect(state => ({cards: state.cards}), {createCard,switchToDeckView})(CreateCard));

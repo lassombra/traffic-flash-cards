@@ -1,0 +1,1 @@
+export switchToDeckView from './switchToDeckView';

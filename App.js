@@ -5,6 +5,7 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import {ActionButton, Toolbar} from 'react-native-material-ui';
 import {store} from './state';
 import CreateCard from './createCard';
+import {StateView} from './viewHandler';
 
 export default class App extends React.Component {
   state = {
@@ -26,7 +27,7 @@ export default class App extends React.Component {
           <View style={styles.container}>
             <StatusBar hidden={true} />
             <Toolbar style={({alignElements: 'center'})} centerElement={<Text>StopGo Study Cards</Text>} isSearchActive={false} />
-            <CreateCard />
+            <StateView />
           </View>
         </Provider>
       );
