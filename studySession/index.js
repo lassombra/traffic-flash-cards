@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, InteractionManager, Text, StyleSheet} from 'react-native';
+import {RED, GREEN, YELLOW, WHITE} from './constants';
 import {VIEW} from './constants';
 import {connect} from 'react-redux';
 import viewHandler from '../viewHandler';
@@ -22,6 +23,21 @@ const StudySession = connect(state => ({deck: state.deck}), {...Actions})(
         }
         init() {
             InteractionManager.runAfterInteractions(this.props.initOrShuffle);
+        }
+        get whiteCount() {
+            return this.props.deck ? this.props.deck.filter(card => card.color === WHITE).length : 0;
+        }
+        get yellowCount() {
+            return this.props.deck ? this.props.deck.filter(card => card.color === YELLOW).legnth : 0;
+        }
+        get redCount() {
+            return this.props.deck ? this.props.deck.filter(card => card.color === RED).length : 0;
+        }
+        get greenCount() {
+            return this.props.deck ? this.props.deck.filter(card => card.color === GREEN).length : 0;
+        }
+        get fullCount() {
+            return this.props.deck ? this.props.deck.length : 0;
         }
     });
 ;
