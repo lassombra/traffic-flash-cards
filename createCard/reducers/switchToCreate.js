@@ -1,8 +1,8 @@
-import {SWITCH_TO_CREATE, CREATE_VIEW} from '../constants';
+import {ViewConstants} from '../../viewMap';
 
 export default function(state, action){
-    if (action.type === SWITCH_TO_CREATE) {
-        return {...state, view:CREATE_VIEW}
+    if (action.type === ViewConstants.SWITCH_TO_CREATE) {
+        return {...state, view:ViewConstants.CREATE_VIEW}
     } else {
         return state;
     }

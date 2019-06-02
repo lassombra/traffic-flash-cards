@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+export * as ViewConstants from './constants';
+export * as ViewActions from './actions';
 class ViewHandler {
     constructor() {
         this.viewMap = new Map();

@@ -4,7 +4,7 @@ import {Card} from 'react-native-material-ui';
 import {RED, GREEN, YELLOW, WHITE} from './constants';
 import {VIEW} from './constants';
 import {connect} from 'react-redux';
-import viewHandler from '../viewHandler';
+import viewHandler from '../viewMap';
 import * as Actions from './actions';
 import FlashCard from './flashCard';
 import './monitor';
