@@ -3,6 +3,7 @@ import {reducer as createCard} from '../createCard';
 import {reducer as viewDeck} from '../viewDeck';
 import {reducer as studySession} from '../studySession';
 import {CREATE_VIEW} from '../createCard/constants'; // default view constant
+import initPersistence from './persist';
 
 
 
@@ -15,3 +16,4 @@ function coreReducer(state = {view:CREATE_VIEW}, action) {
 }
 
 export const store = createStore(coreReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+initPersistence();
