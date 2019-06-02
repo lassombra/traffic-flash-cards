@@ -1,22 +1,19 @@
-import {createStore, applyMiddleware, compose} from 'redux';
+import {createStore} from 'redux';
 import {reducer as createCard} from '../createCard';
 import {reducer as viewDeck} from '../viewDeck';
 import {reducer as studySession} from '../studySession';
-import {reducer as viewMap} from '../viewMap';
-import {ViewConstants} from '../viewMap'; // default view constant
-import persistenceMiddleware from './persist';
-import {monitorMiddleware} from './middleWare';
-export {resultMonitor} from './middleWare';
+import {CREATE_VIEW} from '../createCard/constants'; // default view constant
+import initPersistence from './persist';
 
 
 
-function coreReducer(state = {view:ViewConstants.CREATE_VIEW}, action) {
+function coreReducer(state = {view:CREATE_VIEW}, action) {
     state = createCard(state, action);
     state = viewDeck(state, action);
     state = studySession(state, action);
-    state = viewMap(state, action);
 
     return state;
 }
 
-export const store = createStore(coreReducer, compose(applyMiddleware(monitorMiddleware, persistenceMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+export const store = createStore(coreReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+initPersistence();

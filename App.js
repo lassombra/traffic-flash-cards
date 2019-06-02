@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import {Toolbar} from 'react-native-material-ui';
 import {store} from './state';
-import {StateView} from './viewMap';
+import {StateView} from './viewHandler';
 
 export default class App extends React.Component {
   state = {
