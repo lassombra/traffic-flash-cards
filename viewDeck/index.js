@@ -7,7 +7,7 @@ import {Actions as CreateCardActions} from '../createCard';
 import {DECK_VIEW} from './constants';
 import {Actions as StudySessionActions} from '../studySession';
 import * as Actions from './actions';
-export reducer from './reducers';
+export {default as reducer, deckViewState} from './reducers';
 export * as Actions from './actions';
 
 class DisplayDeck extends React.Component{

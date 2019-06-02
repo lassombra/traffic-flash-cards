@@ -1,15 +1,15 @@
 import {MOVE} from '../constants';
-import {selectActiveCard, newActiveColor} from './helpers';
+import {move} from './helpers';
+import {deckViewState} from '../../viewDeck';
 
 export default function(state, action) {
     if (action.type === MOVE && state.activeCard && state.activeCard.flipped && state.deck && state.activeColor !== undefined) {
-        let deck = [...state.deck];
-        let card = {...state.activeCard, flipped: false, currentSide: 1, color: action.color};
-        deck.push(card);
-        let activeCard = undefined;
-        let activeColor = state.activeColor;
-        [activeCard, deck, activeColor] = selectActiveCard(deck, activeColor, false);
-        return {...state, activeCard, activeColor, deck};
+        cardSelect = move(state.activeCard, state.deck, state.activeColor, action.color, state.cycled_deck);
+        let switchView = {};
+        if (cardSelect.deck.length == 0 && cardSelect.cycled_deck == 0 && !cardSelect.activeCard) {
+            switchView = deckViewState();
+        }
+        return {...state, ...cardSelect, ...switchView};
     } else {
         return state;
     }
