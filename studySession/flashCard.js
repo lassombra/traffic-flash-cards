@@ -12,16 +12,16 @@ export default FlashCards = connect(state => ({activeCard: state.activeCard}), A
                 <View>
                     <Card>
                         <View style={[style.card]}>
-                            <View style={[{flex: 10}, style.center]}>
+                            <View style={[{flex: 10}, style.center, this.cardColor]}>
                                 <Text>
                                     {this.props.activeCard[`side${this.props.activeCard.currentSide}`]}
                                 </Text>
                             </View>
-                            <View style={[{flex:1}, style.center]}>
+                            <View style={[{flex:1}, style.center, this.cardColor]}>
                                 {this.props.activeCard.flipped ? <View style={({flexDirection:'row'})}>
-                                    <Button style={{container: { backgroundColor: '#f00', flex:1} }} text="no" onPress={() => this.props.move(RED)} />
+                                    {this.props.activeCard.color !== GREEN ? <Button style={{container: { backgroundColor: '#f00', flex:1} }} text="no" onPress={() => this.props.move(RED)} /> : null}
                                     <Button style={{container: { backgroundColor: '#ff0', flex:1} }} text="kind of" onPress={() => this.props.move(YELLOW)} />
-                                    <Button style={{container: { backgroundColor: '#0f0', flex:1} }} text="yes" onPress={() => this.props.move(GREEN)} />
+                                    {this.props.activeCard.color !== RED ? <Button style={{container: { backgroundColor: '#0f0', flex:1} }} text="yes" onPress={() => this.props.move(GREEN)} /> : null}
                                 </View> : null}
                             </View>
                         </View>
@@ -30,7 +30,19 @@ export default FlashCards = connect(state => ({activeCard: state.activeCard}), A
             </TouchableNativeFeedback>
         </View>
     }
+    get cardColor() {
+        return {
+            backgroundColor: colorMap[this.props.activeCard.color]
+        }
+    }
 })
+
+const colorMap = {
+    [-1]: '#fff',
+    [0]: '#f77',
+    [1]: '#ff7',
+    [2]: '#7f7'
+};
 
 const style = StyleSheet.create({
     card: {
