@@ -4,7 +4,7 @@ import {createCard} from './actions';
 import {Actions as ViewDeckActions} from '../viewDeck';
 import {connect} from 'react-redux';
 import React from 'react';
-import viewHandler from '../viewHandler';
+import viewHandler from '../viewMap';
 export reducer from './reducers';
 export * as Actions from './actions';
 

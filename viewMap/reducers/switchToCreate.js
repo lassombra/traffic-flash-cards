@@ -1,4 +1,4 @@
-import {SWITCH_TO_CREATE, CREATE_VIEW} from '../constants';
+import {CREATE_VIEW, SWITCH_TO_CREATE} from '../constants';
 
 export default function(state, action){
     if (action.type === SWITCH_TO_CREATE) {
