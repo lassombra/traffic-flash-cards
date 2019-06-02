@@ -9,19 +9,20 @@ export default function initPersistence() {
         const index = store.getState().index;
         if (cards && cards !== previousCards) {
             AsyncStorage.setItem('cards', JSON.stringify(cards));
-            AsyncStorage.setItem('index', JSON.stringify(index));
         }
         previousCards = cards;
     }
 
     store.subscribe(saveCards);
 
-    let cardLoader = AsyncStorage.getItem('cards');
-    let indexLoader = AsyncStorage.getItem('index');
-    Promise.all([cardLoader, indexLoader])
-    .then(([cards, index]) => ({cards, index}))
-    .then(({cards, index}) => ({cards:JSON.parse(cards), index: JSON.parse(index)}))
-    .then(({cards, index}) => {
+    let cardLoader = AsyncStorage.getItem('cards')
+    .then(cards => JSON.parse(cards))
+    .then(cards => {
+        let index = 0;
+        for (let card of cards) {
+            card.id = index;
+            index++;
+        }
         previousCards = cards;
         store.dispatch(Actions.loadCards(cards, index));
     });

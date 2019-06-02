@@ -6,10 +6,10 @@ import {VIEW} from './constants';
 import {connect} from 'react-redux';
 import viewHandler from '../viewHandler';
 import * as Actions from './actions';
+import FlashCard from './flashCard';
+import './monitor';
 export reducer from './reducers';
 export * as Actions from './actions';
-
-import FlashCard from './flashCard';
 
 const StudySession = connect(state => ({deck: state.deck, activeCard: state.activeCard, activeColor: state.activeColor}), {...Actions})(
     class StudySession extends React.Component {
