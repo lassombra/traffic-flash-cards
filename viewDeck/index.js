@@ -13,8 +13,13 @@ export * as Actions from './actions';
 class DisplayDeck extends React.Component{
     render() {
         return <View style={({flex:1,justifyContent:'center',alignContent:'center'})}>
-            <ScrollView style={({flex:10})} showsVerticalScrollIndicator={true}>
+            <ScrollView style={({flex:1})} showsVerticalScrollIndicator={true}>
                 {this.props.cards.map((card, index) => <Card key={index}>
+                    <View style={[{flex:1, alignItems: 'flex-start'}]}>
+                        <Button icon="trash" iconSet="FontAwesome" accent text="" onPress={() => {
+                            this.props.removeCard(card);
+                        }} />
+                    </View>
                     <View style={styles.card}>
                         <View style={styles.side}>
                             <Text>{card.side1}</Text>
@@ -25,7 +30,7 @@ class DisplayDeck extends React.Component{
                     </View>
                 </Card>)}
             </ScrollView>
-            <View style={({flex:1, flexDirection:'row'})}>
+            <View style={({height: 50, flexDirection:'row'})}>
                 <View style={({flex:1})}>
                     <Button text="Input more cards" onPress={this.props.switchToCreate} />
                 </View>
@@ -44,7 +49,7 @@ const styles = StyleSheet.create({
         alignContent: 'center'
     },
     side: {
-        flex:1,
+        flex:10,
         justifyContent: 'center',
         alignItems: 'center'
     }
