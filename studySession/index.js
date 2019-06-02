@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, InteractionManager, Text, StyleSheet} from 'react-native';
+import {View, TouchableNativeFeedback, InteractionManager, Text, StyleSheet} from 'react-native';
 import {Card} from 'react-native-material-ui';
 import {RED, GREEN, YELLOW, WHITE} from './constants';
 import {VIEW} from './constants';
@@ -9,7 +9,9 @@ import * as Actions from './actions';
 export reducer from './reducers';
 export * as Actions from './actions';
 
-const StudySession = connect(state => ({deck: state.deck, activeCard: state.activeCard}), {...Actions})(
+import FlashCard from './flashCard';
+
+const StudySession = connect(state => ({deck: state.deck, activeCard: state.activeCard, activeColor: state.activeColor}), {...Actions})(
     class StudySession extends React.Component {
         render() {
             if (!this.props.deck) {
@@ -19,13 +21,11 @@ const StudySession = connect(state => ({deck: state.deck, activeCard: state.acti
                 </View>;
             }
             return <View style={[style.flex,style.verticalCenter]}>
-                {this.props.activeCard ? <Card>
-                    <View style={[style.card, style.center]}>
-                        <Text>
-                            {this.props.activeCard[`side${this.props.activeCard.currentSide}`]}
-                        </Text>
-                    </View>
-                </Card> : null }
+                {this.props.activeCard ? <FlashCard /> : <TouchableNativeFeedback onPress={this.props.initOrShuffle} background={TouchableNativeFeedback.Ripple()}>
+                        <View style={[style.flex,style.center]}>
+                            <Text style={style.shufflingText}>End of current Deck</Text>
+                        </View>
+                    </TouchableNativeFeedback> }
             </View>;
         }
         init() {
@@ -59,9 +59,6 @@ const style = StyleSheet.create({
     },
     verticalCenter: {
         justifyContent: 'center'
-    },
-    card: {
-        height: 250
     },
     shufflingText: {
         fontSize: 24
