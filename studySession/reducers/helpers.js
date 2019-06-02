@@ -1,3 +1,4 @@
+import {GREEN} from '../constants';
 export function selectActiveCard(deck, activeColor, changeColor = true) {
     let activeDeck = deck.filter(card => card.color === activeColor);
     let activeCard;
@@ -20,24 +21,29 @@ export function newActiveColor(deck) {
     }
 }
 
-export function move(activeCard, deck, activeColor, color) {
+export function move(activeCard, deck, activeColor, color, cycled_deck) {
     deck = [...deck];
+    cycled_deck = [...cycled_deck];
     let card = {...activeCard, flipped: false, currentSide: 1, color};
-    deck.push(card);
+    if (activeCard.color !== GREEN || color !== GREEN) {
+        cycled_deck.push(card);
+    }
     activeCard = undefined;
     [activeCard, deck, activeColor] = selectActiveCard(deck, activeColor, false);
-    return {activeCard, deck};
+    return {activeCard, deck, cycled_deck};
 }
 
-export function shuffleAndSelect(deck, activeColor, activeCard) {
-    let unshuffled_deck = [...deck];
+export function shuffleAndSelect(deck, activeColor, activeCard, cycled_deck = []) {
+    let unshuffled_deck = [...deck, ...cycled_deck];
+    cycled_deck = [];
     deck = [];
     while (unshuffled_deck.length > 0) {
         let card = unshuffled_deck.splice(Math.floor(Math.random() * unshuffled_deck.length), 1)[0];
         deck.push(card);
     }
     if (activeCard === undefined) {
-        [activeCard, deck, activeColor] = selectActiveCard(deck, activeColor);
+        [activeCard, deck, activeColor] = selectActiveCard(deck, -1);
     }
-    return {deck, activeCard, activeColor};
+    cycled_deck = deck.filter(card => card.color !== activeColor);
+    return {deck, activeCard, activeColor, cycled_deck};
 }

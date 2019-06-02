@@ -11,7 +11,7 @@ export default function(state, action) {
         })))];
         let activeColor = state.activeColor !== undefined ? state.activeColor : WHITE;
         let activeCard = state.activeCard;
-        selected = shuffleAndSelect(deck, activeColor, activeCard)
+        selected = shuffleAndSelect(deck, activeColor, activeCard, state.cycled_deck)
         return {...state, ...selected};
     }
     else return state;
