@@ -19,3 +19,25 @@ export function newActiveColor(deck) {
         return undefined;
     }
 }
+
+export function move(activeCard, deck, activeColor, color) {
+    deck = [...deck];
+    let card = {...activeCard, flipped: false, currentSide: 1, color};
+    deck.push(card);
+    activeCard = undefined;
+    [activeCard, deck, activeColor] = selectActiveCard(deck, activeColor, false);
+    return {activeCard, deck};
+}
+
+export function shuffleAndSelect(deck, activeColor, activeCard) {
+    let unshuffled_deck = [...deck];
+    deck = [];
+    while (unshuffled_deck.length > 0) {
+        let card = unshuffled_deck.splice(Math.floor(Math.random() * unshuffled_deck.length), 1)[0];
+        deck.push(card);
+    }
+    if (activeCard === undefined) {
+        [activeCard, deck, activeColor] = selectActiveCard(deck, activeColor);
+    }
+    return {deck, activeCard, activeColor};
+}
