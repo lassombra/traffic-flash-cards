@@ -3,9 +3,10 @@ import {View, ScrollView, Text, StyleSheet} from 'react-native';
 import {Card, Button} from 'react-native-material-ui';
 import {connect} from 'react-redux';
 import viewHandler from '../viewHandler';
-import {switchToCreate} from '../createCard/actions';
+import {Actions as CreateCardActions} from '../createCard';
 import {DECK_VIEW} from './constants';
 import {Actions as StudySessionActions} from '../studySession';
+import * as Actions from './actions';
 export reducer from './reducers';
 export * as Actions from './actions';
 
@@ -49,4 +50,11 @@ const styles = StyleSheet.create({
     }
 })
 
-viewHandler.register(DECK_VIEW, connect(state => ({cards: state.cards || []}), {switchToCreate, switchToStudySession: StudySessionActions.switchToStudySession})(DisplayDeck));
+viewHandler.register(DECK_VIEW, connect(
+    state => ({cards: state.cards || []}), 
+    {
+        switchToCreate: CreateCardActions.switchToCreate, 
+        switchToStudySession: StudySessionActions.switchToStudySession,
+        ...Actions
+    }
+)(DisplayDeck));
