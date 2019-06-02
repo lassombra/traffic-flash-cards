@@ -2,9 +2,8 @@ import React from 'react';
 import {View, TouchableNativeFeedback, InteractionManager, Text, StyleSheet} from 'react-native';
 import {Card} from 'react-native-material-ui';
 import {RED, GREEN, YELLOW, WHITE} from './constants';
-import {VIEW} from './constants';
+import {default as viewHandler, ViewConstants} from '../viewMap';
 import {connect} from 'react-redux';
-import viewHandler from '../viewMap';
 import * as Actions from './actions';
 import FlashCard from './flashCard';
 import './monitor';
@@ -65,4 +64,4 @@ const style = StyleSheet.create({
     }
 })
 
-viewHandler.register(VIEW, StudySession);
+viewHandler.register(ViewConstants.STUDY_SESSION_VIEW, StudySession);

@@ -4,7 +4,6 @@ import {Card, Button} from 'react-native-material-ui';
 import {connect} from 'react-redux';
 import {default as viewHandler,ViewActions as ViewActions} from '../viewMap';
 import {DECK_VIEW} from './constants';
-import {Actions as StudySessionActions} from '../studySession';
 import * as Actions from './actions';
 export {default as reducer, deckViewState} from './reducers';
 export * as Actions from './actions';
@@ -58,7 +57,7 @@ viewHandler.register(DECK_VIEW, connect(
     state => ({cards: state.cards || []}), 
     {
         switchToCreate: ViewActions.switchToCreate, 
-        switchToStudySession: StudySessionActions.switchToStudySession,
+        switchToStudySession: ViewActions.switchToStudySession,
         ...Actions
     }
 )(DisplayDeck));
