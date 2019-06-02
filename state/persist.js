@@ -1,8 +1,7 @@
 import {AsyncStorage} from 'react-native';
-import {store} from './index';
 import {Actions} from '../createCard';
 
-export default function initPersistence() {
+export default function persistenceMiddleWare(store) {
     let previousCards = undefined;
     function saveCards() {
         const cards = store.getState().cards;
@@ -12,8 +11,6 @@ export default function initPersistence() {
         }
         previousCards = cards;
     }
-
-    store.subscribe(saveCards);
 
     let cardLoader = AsyncStorage.getItem('cards')
     .then(cards => JSON.parse(cards))
@@ -26,4 +23,9 @@ export default function initPersistence() {
         previousCards = cards;
         store.dispatch(Actions.loadCards(cards, index));
     });
+    return next => action => {
+        const res = next(action);
+        saveCards();
+        return res;
+    }
 }
