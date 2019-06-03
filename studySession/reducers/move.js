@@ -8,6 +8,10 @@ export default function(state, action) {
         let switchView = {};
         if (cardSelect.deck.length == 0 && cardSelect.cycled_deck == 0 && !cardSelect.activeCard) {
             switchView = deckViewState();
+            cardSelect.deck = undefined;
+            cardSelect.cycled_deck = undefined;
+            cardSelect.activeCard = undefined;
+            cardSelect.activeColor = undefined;
         }
         return {...state, ...cardSelect, ...switchView};
     } else {
