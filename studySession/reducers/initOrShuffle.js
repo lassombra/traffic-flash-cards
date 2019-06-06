@@ -1,17 +1,22 @@
-import {INIT_OR_SHUFFLE_DECKS, RED, YELLOW, GREEN, WHITE} from '../constants';
+import {INIT_OR_SHUFFLE_DECKS, WHITE} from '../constants';
 import {shuffleAndSelect} from './helpers';
 
 export default function(state, action) {
     if (action.type === INIT_OR_SHUFFLE_DECKS) {
-        let deck = [...(state.deck || (state.cards || []).map(card => ({
-            ...card,
-            currentSide: 1,
-            flipped: false,
-            color: WHITE
-        })))];
+        let deck;
+        if (state.deck && state.cycled_deck && (state.deck.length > 0 || state.cycled_deck.length > 0))
+            deck = [...state.deck];
+        else {
+            deck = (state.cards || []).map(card => ({
+                ...card,
+                currentSide: 1,
+                flipped: false,
+                color: WHITE
+            }));
+        }
         let activeColor = state.activeColor !== undefined ? state.activeColor : WHITE;
         let activeCard = state.activeCard;
-        selected = shuffleAndSelect(deck, activeColor, activeCard, state.cycled_deck)
+        let selected = shuffleAndSelect(deck, activeColor, activeCard, state.cycled_deck)
         return {...state, ...selected};
     }
     else return state;

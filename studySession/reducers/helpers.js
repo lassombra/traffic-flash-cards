@@ -30,8 +30,8 @@ export function move(activeCard, deck, activeColor, color, cycled_deck) {
     }
     [activeCard, deck, activeColor] = selectActiveCard(deck, activeColor, false);
     if (deck.length === 0 && cycled_deck.length === 0 && !activeCard) {
-        deck = undefined;
-        cycled_deck = undefined;
+        deck = [];
+        cycled_deck = [];
         activeCard = undefined;
         activeColor = undefined;
     }

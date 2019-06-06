@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, TouchableNativeFeedback, InteractionManager, Text, StyleSheet} from 'react-native';
-import {Card} from 'react-native-material-ui';
+import {View, TouchableNativeFeedback, Text, StyleSheet} from 'react-native';
 import {RED, GREEN, YELLOW, WHITE} from './constants';
 import {default as viewHandler, ViewConstants} from '../viewMap';
 import {connect} from 'react-redux';
@@ -14,7 +13,6 @@ const StudySession = connect(state => ({deck: state.deck, activeCard: state.acti
     class StudySession extends React.Component {
         render() {
             if (!this.props.deck) {
-                this.init();
                 return <View style={[style.flex,style.center]}>
                     <Text style={style.shufflingText}>Shuffling</Text>
                 </View>;
@@ -26,9 +24,6 @@ const StudySession = connect(state => ({deck: state.deck, activeCard: state.acti
                         </View>
                     </TouchableNativeFeedback> }
             </View>;
-        }
-        init() {
-            InteractionManager.runAfterInteractions(this.props.initOrShuffle);
         }
         get whiteCount() {
             return this.props.deck ? this.props.deck.filter(card => card.color === WHITE).length : 0;
