@@ -29,7 +29,7 @@
     "detach": {
       "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.10.8-sdk32.0.0-bca0f957-de78-44c8-91ed-f3151372d79d.tar.gz"
     },
-    "scheme": "exp3fdd032cedb84c96855534831617df39",
+    "scheme": "lassombratrafficflash",
     "android": {
       "package": "lassombra.trafficflash",
       "publishBundlePath": "android\\app\\src\\main\\assets\\shell-app.bundle",
