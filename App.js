@@ -1,64 +1,43 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
+import { StatusBar, StyleSheet, View, Text } from 'react-native';
 import {Provider} from 'react-redux';
-import { AppLoading, Asset, Font, Icon } from 'expo';
 import {Toolbar} from 'react-native-material-ui';
 import {store} from './state';
 import {StateView} from './viewMap';
+import firebase from 'react-native-firebase';
 
+const auth = firebase.auth();
 export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      isAuthenticated: false,
+    }
+  }
+  componentDidMount() {
+    auth.signInAnonymously().then(() => {
+      this.setState({
+        isAuthenticated: true
+      });
+    })
+  }
 
   render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-      return (
-        <AppLoading
-          startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
-        />
-      );
+    if (!this.state.isAuthenticated) {
+      return null;
     } else {
       return (
-        <Provider store={store}>
-          <View style={styles.container}>
-            <StatusBar hidden={true} />
-            <Toolbar style={({alignElements: 'center'})} centerElement={<Text>StopGo Study Cards</Text>} isSearchActive={false} />
-            <StateView />
-          </View>
-        </Provider>
+          <Provider store={store}>
+            <View style={styles.container}>
+              <StatusBar hidden={true}/>
+              <Toolbar style={({alignElements: 'center'})} centerElement={<Text>StopGo Study Cards {auth.currentUser.uid}</Text>}
+                       isSearchActive={false}/>
+              <StateView/>
+            </View>
+          </Provider>
       );
     }
   }
-
-  _loadResourcesAsync = async () => {
-    return Promise.all([
-      Asset.loadAsync([
-        require('./assets/images/robot-dev.png'),
-        require('./assets/images/robot-prod.png'),
-      ]),
-      Font.loadAsync({
-        // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-        'Roboto': require('./assets/fonts/Roboto-Regular.ttf')
-      }),
-    ]);
-  };
-
-  _handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
-    console.warn(error);
-  };
-
-  _handleFinishLoading = () => {
-    this.setState({ isLoadingComplete: true });
-  };
 }
 
 const styles = StyleSheet.create({
