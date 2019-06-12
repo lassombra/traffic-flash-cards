@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, ScrollView, Text, StyleSheet} from 'react-native';
+import {View, ScrollView, Text, StyleSheet, Clipboard} from 'react-native';
 import {Card, Button} from 'react-native-material-ui';
 import {connect} from 'react-redux';
 import {default as viewHandler,ViewActions as ViewActions} from '../viewMap';
+import {Actions as CreateCardActions} from '../createCard';
 import {DECK_VIEW} from './constants';
 import * as Actions from './actions';
 export {default as reducer, deckViewState} from './reducers';
@@ -33,11 +34,33 @@ class DisplayDeck extends React.Component{
                     <Button text="Input more cards" onPress={this.props.switchToCreate} />
                 </View>
                 <View style={({flex:1})}>
+                    <Button text="Export" onPress={this.export} />
+                </View>
+                <View style={({flex:1})}>
+                    <Button text="Import" onPress={this.import} />
+                </View>
+                <View style={({flex:1})}>
                     <Button text="Begin" onPress={this.props.switchToStudySession} />
                 </View>
             </View>
         </View>;
     }
+    export = () => {
+        Clipboard.setString(JSON.stringify(this.props.cards));
+    };
+    import = () => {
+        Clipboard.getString()
+            .then(result => JSON.parse(result))
+            .then(cards => {
+            if (!this.props.cards.length && cards && cards.length && cards.filter(card => card.side1 !== undefined && card.side2 !== undefined).length) {
+                this.props.loadCards(cards.map((card, index) => ({
+                    side1: card.side1,
+                    side2: card.side2,
+                    id: index
+                })), cards.length)
+            }
+        });
+    };
 }
 
 const styles = StyleSheet.create({
@@ -56,7 +79,8 @@ const styles = StyleSheet.create({
 viewHandler.register(DECK_VIEW, connect(
     state => ({cards: state.cards || []}), 
     {
-        switchToCreate: ViewActions.switchToCreate, 
+        switchToCreate: ViewActions.switchToCreate,
+        loadCards: CreateCardActions.loadCards,
         switchToStudySession: ViewActions.switchToStudySession,
         ...Actions
     }
