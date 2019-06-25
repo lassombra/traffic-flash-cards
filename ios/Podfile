@@ -29,6 +29,8 @@ target 'StopGoFashCards' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
+
 end
 
 target 'StopGoFashCards-tvOS' do

@@ -3,6 +3,7 @@ package com.lassombra.stopgofashcards;
 import android.support.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
@@ -43,6 +44,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new RNGoogleSigninPackage(),
             new AsyncStoragePackage(),
             new VectorIconsPackage(),
         new RNFirebasePackage(),
